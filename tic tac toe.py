@@ -1,116 +1,97 @@
 import random
 
-
-board = ['-','-','-',
-         '-','-','-',
-         '-','-','-']
-currentplayer = 'X'
+# --- Game Setup ---
+board = ['-'] * 9
+current_player = 'X'
 winner = None
-gamerunning = True
+game_running = True
 
-#Printing the game board
+# --- Functions ---
 def print_board(board):
-    print('   |   |')
-    print(' ' + board[0] + ' | ' + board[1] + ' | ' + board[2])
-    print('   |   |')
-    print('-----------')
-    print('   |   |')
-    print(' ' + board[3] + ' | ' + board[4] + ' | ' + board[5])
-    print('   |   |')
-    print('-----------')
-    print('   |   |')
-    print(' ' + board[6] + ' | ' + board[7] + ' | ' + board[8])
-    print('   |   |')
+    print("\n")
+    print(f" {board[0]} | {board[1]} | {board[2]} ")
+    print("---|---|---")
+    print(f" {board[3]} | {board[4]} | {board[5]} ")
+    print("---|---|---")
+    print(f" {board[6]} | {board[7]} | {board[8]} ")
+    print("\n")
 
-#Take palyer input
 def player_input(board):
-    inp=int(input('Enter a number between 1-9: '))
-    if inp>=1 and inp<=9 and board[inp-1]=='-':
-        board[inp-1] = currentplayer
-    else:
-        print('Oops player is already in this spot ')
+    while True:
+        try:
+            inp = int(input("Enter a number (1-9): "))
+            if inp in range(1, 10) and board[inp - 1] == '-':
+                board[inp - 1] = current_player
+                break
+            else:
+                print("❌ Spot taken or invalid. Try again.")
+        except ValueError:
+            print("⚠️ Please enter a valid number between 1-9.")
 
-        
-#Check win or tie
-
-def check_horizontle(board):
+def check_horizontal(board):
     global winner
-    if board[0] == board[1] == board[2] and board[1]!='-':
-        winner=board[1]
-        return True
-    elif board[3] == board[4] == board[5] and board[3]!='-':
-        winner=board[2]
-        return True
-    elif board[6] == board[7] == board[8] and board[6]!='-':
-        winner=board[6]
-        return True
+    for i in range(0, 9, 3):
+        if board[i] == board[i+1] == board[i+2] and board[i] != '-':
+            winner = board[i]
+            return True
+    return False
 
-def check_row(board):
+def check_vertical(board):
     global winner
-    if board[0] == board[3] == board[6] and board[0]!='-':
-        winner=board[0]
-        return True
-    elif board[1] == board[4] == board[7] and board[7]!='-':
-        winner=board[1]
-        return True
-    elif board[2] == board[5] == board[8] and board[2]!='-':
-        winner=board[2]
-        return True
+    for i in range(3):
+        if board[i] == board[i+3] == board[i+6] and board[i] != '-':
+            winner = board[i]
+            return True
+    return False
 
 def check_diagonal(board):
     global winner
-    if board[0] == board[4] == board[8] and board[0]!='-':
-        winner=board[0]
+    if board[0] == board[4] == board[8] and board[0] != '-':
+        winner = board[0]
         return True
-    elif board[2] == board[4] == board[6] and board[2]!='-':
-        winner=board[2]
+    elif board[2] == board[4] == board[6] and board[2] != '-':
+        winner = board[2]
         return True
+    return False
 
-    
+def check_win(board):
+    if check_horizontal(board) or check_vertical(board) or check_diagonal(board):
+        print_board(board)
+        print(f"🏆 The winner is {winner}!")
+        return True
+    return False
+
 def check_tie(board):
-    global gamerunning
     if '-' not in board:
         print_board(board)
-        print('Its a tie!!!')
-        gamerunning = False
-
-def check_win():
-    if check_diagonal(board) or check_horizontle(board) or check_row(board):
-        print(f'The winner is {winner}')
-
-
-#Switch the palyer
+        print("🤝 It's a tie!")
+        return True
+    return False
 
 def switch_player():
-    global currentplayer
-    if currentplayer == 'X':
-        currentplayer='O'
-    else:
-        currentplayer = 'X'
+    global current_player
+    current_player = 'O' if current_player == 'X' else 'X'
 
-'''#Computer
-def computer(board):
-    while currentplayer == 'O':
-        position = random.randint(0,8)
-        if board[position]=='-':
-            board[position]='O'
-            switch_player()'''
+def computer_move(board):
+    print("💻 Computer's turn...")
+    while True:
+        pos = random.randint(0, 8)
+        if board[pos] == '-':
+            board[pos] = 'O'
+            break
 
-#check for win or tie again
+# --- Game Loop ---
+mode = input("Play vs (1) Player or (2) Computer? Enter 1 or 2: ")
 
-while gamerunning:
+while game_running:
     print_board(board)
-    player_input(board)
-    check_win()
-    check_tie(board)
+
+    if mode == '1' or (mode == '2' and current_player == 'X'):
+        player_input(board)
+    else:
+        computer_move(board)
+
+    if check_win(board) or check_tie(board):
+        break
+
     switch_player()
-    '''computer(board)
-    check_win()
-    check_tie(board)'''
-
-
-
-
-
-
-    
