@@ -10,7 +10,10 @@ A simple and fun **Tic Tac Toe** game built in **Python**, playable in the termi
 - 💻 **Smart random AI** that chooses empty spots  
 - 🔄 Automatic win & tie detection  
 - 🎯 Input validation — no invalid moves or crashes  
-- 🧼 Clean and colorful terminal display  
+- 🧼 Clean terminal display  
+<img width="450" height="196" alt="image" src="https://github.com/user-attachments/assets/68ec63a7-44c2-4c67-a17c-2deff3de5a1a" />
+<img width="252" height="242" alt="image" src="https://github.com/user-attachments/assets/5ceb9f1f-f2ff-4056-9700-84cdc1211ea8" />
+
 
 ---
 
