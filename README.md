@@ -21,7 +21,7 @@ A simple and fun **Tic Tac Toe** game built in **Python**, playable in the termi
 
 ```bash
 # Clone this repository
-git clone https://github.com/YOUR-USERNAME/tic-tac-toe-python.git
+git clone https://github.com/callmesomeone000/Tic-tac-toe.git
 cd tic-tac-toe-python
 
 # Run the game
